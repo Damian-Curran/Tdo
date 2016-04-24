@@ -12,6 +12,7 @@ angular.module('task', ['ionic','database'])
 	}
 
 	$scope.loadTask(); 
+	$scope.listCanSwipe = true;
   
   $scope.createTask = function(task) {
 	 //adds task to database then reloads database info
@@ -42,5 +43,22 @@ angular.module('task', ['ionic','database'])
 	  title: 'Task Info',
 	  content: tasktitle
 	})
+  };
+  
+  $scope.edit = function(taskid,tasktitle) {
+	 $ionicPopup.prompt({
+	  title: 'Enter Updates to Task'
+	}).then(function(res) {
+		//if checks to see if they clicked ok option without entering characters, which would make it undefined or null
+		if(res != "")
+		{
+			//deletes taskid saved task_name 
+			SQLService.del(taskid);
+			//sets new updated task_name
+			SQLService.set(res);
+			//loads database to refresh html page
+			$scope.loadTask();
+		}
+	});
   };
 })
