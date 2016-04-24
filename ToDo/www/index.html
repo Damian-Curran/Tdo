@@ -21,6 +21,8 @@
 	<!-- header title bar -->
     <ion-header-bar class="bar-assertive">
 	<!-- button which shows delete buttons for each task -->
+	<button class="button button-icon icon ion-android-delete" 
+          ng-click="data.showDelete = !data.showDelete"></button>
         <h1 class="title">Memo</h1>
     </ion-header-bar>
 		  
@@ -36,10 +38,12 @@
 			</div>
 		</form>
 	
+	<ion-list show-delete="data.showDelete">  
 		<!-- ion-item repeater to show all task.name's-->
 		  <ion-item ng-show="tasks.length" ng-repeat="task in tasks" item="task"">
 			{{task.task_name}}
 			<!-- delete button on item calls delete function and passes task id number -->
+			<ion-delete-button class="ion-ios-close" ng-click="deleteItem(task.task_id)"></ion-delete-button>
 		  </ion-item>
 		</ion-list>   
     </ion-content> 
