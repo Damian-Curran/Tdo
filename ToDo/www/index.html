@@ -1,33 +1,68 @@
 <!DOCTYPE html>
-
+<!-- Resources for ion-list, ion-delete-button
+http://ionicframework.com/docs/api/directive/ionList/
+http://ionicframework.com/docs/api/directive/ionDeleteButton/
+http://ionicframework.com/docs/api/service/$ionicModal/
+http://codepen.io/ionic/pen/JsHjf
+http://ionicframework.com/docs/api/directive/ionList/
+http://www.w3schools.com/css/css_rwd_viewport.asp
+-->
 <html>
   <head>
     <meta charset="utf-8">
+	<!-- viewport for phone view -->
     <meta name="viewport" content="" width="device-width, initial-scale=1.0">
     <title></title>
 
+	<!-- style sheet css  -->
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
 
+    <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+    <!-- cordova script -->
     <script src="cordova.js"></script>
 
+    <!-- app's js -->
     <script src="js/task.js"></script>
     <script src="js/database.js"></script>
   </head>  
   
   <body ng-app="task" ng-controller="taskCtrl" bgcolor="white">
   
-	<!-- header title bar -->
     <ion-header-bar class="bar-assertive">
-	<!-- button which shows delete buttons for each task -->
-	<button class="button button-icon icon ion-android-delete" 
+        <button class="button button-icon icon ion-android-delete" 
           ng-click="data.showDelete = !data.showDelete"></button>
+		<button class="button button-icon pull-right" ng-click="newTask()">
+          <i class="icon ion-compose"></i>
+        </button>
         <h1 class="title">Memo</h1>
     </ion-header-bar>
 		  
 	<ion-content>
-	<form ng-submit="createTask(task)">
+		<ion-list show-delete="data.showDelete">  
+		  <ion-item ng-show="tasks.length" ng-repeat="task in tasks" item="task" ng-click="showDets(task.task_name)">
+			{{task.task_name}}
+			<ion-option-button class="button-assertive"
+                             ng-click="edit(task.task_id,task.task_name)">
+            Edit
+          </ion-option-button>
+		  <ion-delete-button class="ion-ios-close" ng-click="deleteItem(task.task_id)"></ion-delete-button>
+		  </ion-item>
+		</ion-list>   
+    </ion-content> 
+    
+	<script id="new-task.html" type="text/ng-template">
+
+      <div class="modal">
+
+        <ion-header-bar class="bar-stable">
+          <h1 class="title">New Task</h1>
+          <button class="button button-clear button-positive" ng-click="closeNewTask()">Cancel</button>
+        </ion-header-bar>
+
+        <ion-content>
+		<form ng-submit="createTask(task)">
 			<div class="list">
 			  <label class="item item-input">
 			   <input type="text" placeholder="Task" ng-model="task.title">
@@ -37,21 +72,13 @@
 			  <button type="submit" class="button button-block button-assertive">Create Task</button>
 			</div>
 		</form>
+
+        </ion-content>
+
+      </div>
+
+    </script>
 	
-	<ion-list show-delete="data.showDelete">  
-		<!-- ion-item repeater to show all task.name's-->
-		  <ion-item ng-show="tasks.length" ng-repeat="task in tasks" item="task"" ng-click="showDets(task.task_name)">
-			{{task.task_name}}
-			<ion-option-button class="button-assertive"
-                             ng-click="edit(task.task_id,task.task_name)">
-            Edit
-          </ion-option-button>
-			<!-- delete button on item calls delete function and passes task id number -->
-			<ion-delete-button class="ion-ios-close" ng-click="deleteItem(task.task_id)"></ion-delete-button>
-		  </ion-item>
-		</ion-list>   
-    </ion-content> 
-    
   </body>
 
 </html>
