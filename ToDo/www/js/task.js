@@ -35,4 +35,12 @@ angular.module('task', ['ionic','database'])
 	  } 
 	});
   };
+  
+  $scope.showDets = function(tasktitle) {
+	   //popup.alert used to show alternative inerface for task info, rather than changing .html
+	$ionicPopup.alert({
+	  title: 'Task Info',
+	  content: tasktitle
+	})
+  };
 })

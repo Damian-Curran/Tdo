@@ -40,7 +40,7 @@
 	
 	<ion-list show-delete="data.showDelete">  
 		<!-- ion-item repeater to show all task.name's-->
-		  <ion-item ng-show="tasks.length" ng-repeat="task in tasks" item="task"">
+		  <ion-item ng-show="tasks.length" ng-repeat="task in tasks" item="task"" ng-click="showDets(task.task_name)">
 			{{task.task_name}}
 			<!-- delete button on item calls delete function and passes task id number -->
 			<ion-delete-button class="ion-ios-close" ng-click="deleteItem(task.task_id)"></ion-delete-button>
